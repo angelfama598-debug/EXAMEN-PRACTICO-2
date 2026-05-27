@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+    <div class="card-header bg-white p-4 border-0 d-flex flex-sm-row flex-column justify-content-between align-items-sm-center gap-3">
+        <div>
+            <h3 class="fw-bold text-dark mb-1"><i class="bi bi-people-fill text-success"></i> Fichero de Pacientes Activos</h3>
+            <p class="text-muted mb-0 small">Directorio de afiliados y líneas de comunicación directa.</p>
+        </div>
+        <a href="{{ url_for('pacientes.crear') }}" class="btn btn-success px-4 py-2 rounded-pill fw-bold d-flex align-items-center gap-2 shadow-sm">
+            <i class="bi bi-plus-circle-fill"></i> Registrar Paciente
+        </a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0 text-nowrap">
+            <thead class="table-light text-uppercase fs-7 text-secondary border-bottom">
+                <tr>
+                    <th class="ps-4 py-3">Nro. Expediente</th>
+                    <th class="py-3">Paciente</th>
+                    <th class="py-3">Teléfono de Contacto</th>
+                    <th class="pe-4 py-3 text-center">Operaciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in pacientes %}
+                <tr>
+                    <td class="ps-4 fw-bold text-success">#PAC-0{{ p.id }}</td>
+                    <td>
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="avatar bg-success text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 38px; height: 38px;">
+                                {{ p.nombre[:1].upper() }}
+                            </div>
+                            <span class="fw-semibold text-dark">{{ p.nombre }}</span>
+                        </div>
+                    </td>
+                    <td><span class="text-dark fw-medium"><i class="bi bi-telephone-outbound text-muted me-1"></i> {{ p.telefono }}</span></td>
+                    <td class="pe-4 text-center">
+                        <a href="{{ url_for('pacientes.editar', id=p.id) }}" class="btn btn-sm btn-outline-success px-3 rounded-pill fw-bold d-inline-flex align-items-center gap-1 me-1">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <form action="{{ url_for('pacientes.eliminar', id=p.id) }}" method="POST" style="display:inline;">
+                            <button class="btn btn-sm btn-outline-danger px-3 rounded-pill fw-bold d-inline-flex align-items-center gap-1" onclick="return confirm('¿Remover expediente?')">
+                                <i class="bi bi-trash3-fill"></i> eliminar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" class="text-center py-5 text-muted">
+                        <i class="bi bi-person-fill-x display-4 mb-2"></i>
+                        <p class="mb-0">No se encuentran pacientes registrados.</p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

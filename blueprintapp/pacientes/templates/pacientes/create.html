@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="p-4 text-white text-center" style="background: linear-gradient(135deg, #198754 0%, #146c43 100%);">
+                <i class="bi bi-person-vcard-fill display-5"></i>
+                <h4 class="fw-bold mt-2 mb-1">Apertura de Expediente</h4>
+                <p class="mb-0 text-white-50 small">Ingrese los datos informativos del paciente</p>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small fw-bold">Nombre Completo del Paciente</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-person-workspace"></i></span>
+                            <input type="text" name="nombre" class="form-control bg-light border-start-0" placeholder="Ej. Miguel Angel Flores" required>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label text-secondary small fw-bold">Número de Teléfono / Celular</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-telephone-fill"></i></span>
+                            <input type="text" name="telefono" class="form-control bg-light border-start-0" placeholder="Ej. +591 76543210" required>
+                        </div>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <button type="submit" class="btn btn-success w-100 py-2 rounded-pill fw-bold">Guardar Ficha</button>
+                        </div>
+                        <div class="col-6">
+                            <a href="{{ url_for('pacientes.index') }}" class="btn btn-light w-100 py-2 rounded-pill fw-bold text-secondary border">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="p-4 text-dark text-center" style="background: linear-gradient(135deg, #ffc107 0%, #ffca28 100%);">
+                <i class="bi bi-pencil-square display-5"></i>
+                <h4 class="fw-bold mt-2 mb-1">Re-programar Cita Médica</h4>
+                <p class="mb-0 text-dark-50 small">Actualice el horario o reasigne las entidades vinculadas</p>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST">
+                    <div class="row g-3 mb-3">
+                        <div class="col-sm-6">
+                            <label class="form-label text-secondary small fw-bold">Fecha</label>
+                            <input type="date" name="fecha" class="form-control" value="{{ cita.fecha }}" required>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label text-secondary small fw-bold">Hora</label>
+                            <input type="time" name="hora" class="form-control" value="{{ cita.hora }}" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small fw-bold">Médico Designado</label>
+                        <select name="medico_id" class="form-select" required>
+                            {% for m in medicos %}
+                            <option value="{{ m.id }}" {% if m.id == cita.medico_id %}selected{% endif %}>Dr. {{ m.nombre }} ({{ m.especialidad }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label text-secondary small fw-bold">Paciente Afiliado</label>
+                        <select name="paciente_id" class="form-select" required>
+                            {% for p in pacientes %}
+                            <option value="{{ p.id }}" {% if p.id == cita.paciente_id %}selected{% endif %}>{{ p.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-6"><button type="submit" class="btn btn-warning text-dark w-100 py-2 rounded-pill fw-bold">Guardar</button></div>
+                        <div class="col-6"><a href="{{ url_for('citas.index') }}" class="btn btn-light w-100 py-2 rounded-pill fw-bold text-secondary border">Regresar</a></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

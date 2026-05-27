@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="p-4 text-white text-center" style="background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);">
+                <i class="bi bi-pencil-square display-5"></i>
+                <h4 class="fw-bold mt-2 mb-1">Modificar Médico</h4>
+                <p class="mb-0 text-white-50 small">Actualice la información del especialista</p>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small fw-bold">Nombre Completo</label>
+                        <input type="text" name="nombre" class="form-control" value="{{ medico.nombre }}" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label text-secondary small fw-bold">Especialidad Clínica</label>
+                        <input type="text" name="especialidad" class="form-control" value="{{ medico.especialidad }}" required>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-6"><button type="submit" class="btn btn-primary w-100 py-2 rounded-pill fw-bold">Actualizar</button></div>
+                        <div class="col-6"><a href="{{ url_for('medicos.index') }}" class="btn btn-light w-100 py-2 rounded-pill fw-bold text-secondary border">Cancelar</a></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

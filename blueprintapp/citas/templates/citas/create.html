@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="p-4 text-dark text-center" style="background: linear-gradient(135deg, #ffc107 0%, #ffca28 100%);">
+                <i class="bi bi-calendar-event-fill display-5"></i>
+                <h4 class="fw-bold mt-2 mb-1">Mapeo y Reserva de Citas</h4>
+                <p class="mb-0 text-dark-50 small">Los selectores recuperan llaves primarias mapeadas desde SQLite</p>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST">
+                    <div class="row g-3 mb-3">
+                        <div class="col-sm-6">
+                            <label class="form-label text-secondary small fw-bold">Fecha Planificada</label>
+                            <input type="date" name="fecha" class="form-control bg-light" required>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label text-secondary small fw-bold">Hora Programada</label>
+                            <input type="time" name="hora" class="form-control bg-light" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small fw-bold">Asignar Médico de Planta</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-muted"><i class="bi bi-person-md"></i></span>
+                            <select name="medico_id" class="form-select bg-light" required>
+                                <option value="" disabled selected>Elija un especialista especialista...</option>
+                                {% for m in medicos %}
+                                <option value="{{ m.id }}">ID: {{ m.id }} — Dr. {{ m.nombre }} ({{ m.especialidad }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label text-secondary small fw-bold">Asignar Paciente Afiliado</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-muted"><i class="bi bi-people"></i></span>
+                            <select name="paciente_id" class="form-select bg-light" required>
+                                <option value="" disabled selected>Seleccione el paciente destino...</option>
+                                {% for p in pacientes %}
+                                <option value="{{ p.id }}">Exp: {{ p.id }} — {{ p.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <button type="submit" class="btn btn-warning text-dark w-100 py-2 rounded-pill fw-bold">Establecer Vínculo</button>
+                        </div>
+                        <div class="col-6">
+                            <a href="{{ url_for('citas.index') }}" class="btn btn-light w-100 py-2 rounded-pill fw-bold text-secondary border">Regresar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

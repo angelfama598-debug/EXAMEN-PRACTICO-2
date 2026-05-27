@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+    <div class="card-header bg-white p-4 border-0 d-flex flex-sm-row flex-column justify-content-between align-items-sm-center gap-3">
+        <div>
+            <h3 class="fw-bold text-dark mb-1"><i class="bi bi-person-md text-primary"></i> Staff de Médicos Registrados</h3>
+            <p class="text-muted mb-0 small">Catálogo de profesionales de la salud con especialidades validadas.</p>
+        </div>
+        <a href="{{ url_for('medicos.crear') }}" class="btn btn-primary px-4 py-2 rounded-pill fw-bold d-flex align-items-center gap-2 shadow-sm">
+            <i class="bi bi-plus-circle-fill"></i> Registrar Médico
+        </a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0 text-nowrap">
+            <thead class="table-light text-uppercase fs-7 text-secondary border-bottom">
+                <tr>
+                    <th class="ps-4 py-3">Código ID</th>
+                    <th class="py-3">Nombre Especialista</th>
+                    <th class="py-3">Especialidad</th>
+                    <th class="pe-4 py-3 text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in medicos %}
+                <tr>
+                    <td class="ps-4 fw-bold text-primary">#MED-0{{ m.id }}</td>
+                    <td>
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 38px; height: 38px;">
+                                {{ m.nombre[:1].upper() }}
+                            </div>
+                            <span class="fw-semibold text-dark">{{ m.nombre }}</span>
+                        </div>
+                    </td>
+                    <td><span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold"><i class="bi bi-patch-check"></i> {{ m.especialidad }}</span></td>
+                    <td class="pe-4 text-center">
+                        <a href="{{ url_for('medicos.editar', id=m.id) }}" class="btn btn-sm btn-outline-primary px-3 rounded-pill fw-bold d-inline-flex align-items-center gap-1 me-1">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <form action="{{ url_for('medicos.eliminar', id=m.id) }}" method="POST" style="display:inline;">
+                            <button class="btn btn-sm btn-outline-danger px-3 rounded-pill fw-bold d-inline-flex align-items-center gap-1" onclick="return confirm('¿Eliminar registro?')">
+                                <i class="bi bi-trash3-fill"></i> dar de baja
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" class="text-center py-5 text-muted">
+                        <i class="bi bi-folder-x display-4 mb-2"></i>
+                        <p class="mb-0">No existen médicos registrados.</p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

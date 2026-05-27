@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="p-4 text-white text-center" style="background: linear-gradient(135deg, #198754 0%, #146c43 100%);">
+                <i class="bi bi-pencil-square display-5"></i>
+                <h4 class="fw-bold mt-2 mb-1">Modificar Expediente</h4>
+                <p class="mb-0 text-white-50 small">Actualice el registro informativo del paciente</p>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small fw-bold">Nombre Completo</label>
+                        <input type="text" name="nombre" class="form-control" value="{{ paciente.nombre }}" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label text-secondary small fw-bold">Número de Teléfono</label>
+                        <input type="text" name="telefono" class="form-control" value="{{ paciente.telefono }}" required>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-6"><button type="submit" class="btn btn-success w-100 py-2 rounded-pill fw-bold">Actualizar</button></div>
+                        <div class="col-6"><a href="{{ url_for('pacientes.index') }}" class="btn btn-light w-100 py-2 rounded-pill fw-bold text-secondary border">Cancelar</a></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

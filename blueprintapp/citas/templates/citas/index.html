@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+    <div class="card-header bg-white p-4 border-0 d-flex flex-sm-row flex-column justify-content-between align-items-sm-center gap-3">
+        <div>
+            <h3 class="fw-bold text-dark mb-1"><i class="bi bi-calendar-heart-fill text-warning"></i> Bitácora General de Citas</h3>
+            <p class="text-muted mb-0 small">Cruces relacionales de la base de datos entre Pacientes y Especialistas.</p>
+        </div>
+        <a href="{{ url_for('citas.crear') }}" class="btn btn-warning text-dark px-4 py-2 rounded-pill fw-bold d-flex align-items-center gap-2 shadow-sm">
+            <i class="bi bi-calendar-plus-fill"></i> Agendar Nueva Cita
+        </a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0 text-nowrap">
+            <thead class="table-light text-uppercase fs-7 text-secondary border-bottom">
+                <tr>
+                    <th class="ps-4 py-3">ID Cita</th>
+                    <th class="py-3">Cronograma (Fecha/Hora)</th>
+                    <th class="py-3"><i class="bi bi-person-md"></i> Médico Designado</th>
+                    <th class="py-3"><i class="bi bi-people-fill"></i> Paciente Citado</th>
+                    <th class="pe-4 py-3 text-center">Acción Operativa</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in citas %}
+                <tr>
+                    <td class="ps-4 fw-bold text-warning">#CIT-0{{ c.id }}</td>
+                    <td>
+                        <div class="d-flex flex-column">
+                            <span class="text-dark fw-bold"><i class="bi bi-calendar3 text-muted me-1"></i> {{ c.fecha }}</span>
+                            <span class="text-muted small"><i class="bi bi-clock-history me-1"></i> {{ c.hora }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center text-white font-weight-bold" style="width: 28px; height: 28px; font-size: 11px;">
+                                <i class="bi bi-heart-pulse"></i>
+                            </div>
+                            <span class="fw-semibold text-dark">{{ c.medico.nombre }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="bg-success rounded-circle d-flex align-items-center justify-content-center text-white font-weight-bold" style="width: 28px; height: 28px; font-size: 11px;">
+                                <i class="bi bi-person"></i>
+                            </div>
+                            <span class="text-dark fw-medium">{{ c.paciente.nombre }}</span>
+                        </div>
+                    </td>
+                    <td class="pe-4 text-center">
+                        <a href="{{ url_for('citas.editar', id=c.id) }}" class="btn btn-sm btn-outline-warning text-dark px-3 rounded-pill fw-bold d-inline-flex align-items-center gap-1 me-1">
+                            <i class="bi bi-pencil-square"></i> Re-programar
+                        </a>
+                        <form action="{{ url_for('citas.eliminar', id=c.id) }}" method="POST" style="display:inline;">
+                            <button class="btn btn-sm btn-outline-danger px-3 rounded-pill fw-bold" onclick="return confirm('¿Desea cancelar y remover esta cita programada?')">
+                                <i class="bi bi-x-circle-fill"></i> Cancelar Cita
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center py-5 text-muted">
+                        <i class="bi bi-calendar-x display-4 block mb-2"></i>
+                        <p class="mb-0">No se registran citas agendadas en la central cronológica.</p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
